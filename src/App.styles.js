@@ -57,7 +57,7 @@ input:-webkit-autofill:active{
 html, body {
 	font-family: "Montserrat", sans-serif;
 	color: #bcbcc4;
-	font-size: 18px;
+	font-size: 14px;
 	font-style: normal;
 	font-weight: 400;
    user-select: none;
@@ -153,6 +153,7 @@ export const FooterTable = styled.div`
   padding: 10px;
   display: flex;
   gap: 25px;
+  border-top: 1px solid #797980;
 `
 export const FooterText = styled.p`
   & span {

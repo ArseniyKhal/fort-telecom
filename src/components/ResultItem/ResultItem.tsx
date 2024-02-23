@@ -1,8 +1,8 @@
 import { useState } from 'react'
-
+import { DataType } from '../../App'
 import * as S from './ResultItem.styles'
 
-export const ResultItem = () => {
+export const ResultItem = ({ dataItem }: { dataItem: DataType }) => {
   return (
     <S.ResultsItem
     // onClick={() => handleClickUser()}
@@ -13,11 +13,11 @@ export const ResultItem = () => {
     >
       <S.ResultsItemCol1>
         <S.InputСheckbox type="checkbox" id="checkbox"></S.InputСheckbox>
-        <label htmlFor="checkbox"></label>
+        <S.InputLabel htmlFor="checkbox"></S.InputLabel>
       </S.ResultsItemCol1>
-      <S.ResultsItemCol2>КАМАЗ топливозаправочный</S.ResultsItemCol2>
-      <S.ResultsItemCol3>000129078657976</S.ResultsItemCol3>
-      <S.ResultsItemCol4>509</S.ResultsItemCol4>
+      <S.ResultsItemCol2>{dataItem.name}</S.ResultsItemCol2>
+      <S.ResultsItemCol3>{dataItem.IMEI}</S.ResultsItemCol3>
+      <S.ResultsItemCol4>{dataItem.value}</S.ResultsItemCol4>
     </S.ResultsItem>
   )
 }

@@ -1,14 +1,19 @@
-import * as S from './App.styles'
 import { ResultItem } from './components/ResultItem/ResultItem'
+import { fileData } from './data'
+import * as S from './App.styles'
 
 export interface DataType {
   id: number
   name: string
   IMEI: string
-  value: number
+  value: number | undefined
 }
 
 function App() {
+  const lastMap = fileData.map((el: DataType) => {
+    return <ResultItem key={el.id} dataItem={el}></ResultItem>
+  })
+
   return (
     <>
       <S.GlobalStyle />
@@ -33,12 +38,7 @@ function App() {
               <S.ResultsTitleCol3>IMEI для регистрации</S.ResultsTitleCol3>
               <S.ResultsTitleCol4>Пакетов не передано</S.ResultsTitleCol4>
             </S.HeaderTable>
-            <S.BodyTable>
-              <ResultItem></ResultItem>
-              <ResultItem></ResultItem>
-              <ResultItem></ResultItem>
-              <ResultItem></ResultItem>
-            </S.BodyTable>
+            <S.BodyTable>{lastMap}</S.BodyTable>
             <S.FooterTable>
               <S.FooterText>
                 Объектов: <span>15</span>
