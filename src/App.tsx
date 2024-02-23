@@ -6,7 +6,7 @@ export interface DataType {
   id: number
   name: string
   IMEI: string
-  value: number | undefined
+  value: number | undefined | string
 }
 
 function App() {
@@ -14,6 +14,9 @@ function App() {
     return <ResultItem key={el.id} dataItem={el}></ResultItem>
   })
 
+  const slowPackets = fileData.filter(
+    (el: DataType) => el.value !== 0 && el.value !== undefined,
+  )
   return (
     <>
       <S.GlobalStyle />
@@ -41,13 +44,13 @@ function App() {
             <S.BodyTable>{lastMap}</S.BodyTable>
             <S.FooterTable>
               <S.FooterText>
-                Объектов: <span>15</span>
+                Объектов: <span>{fileData.length}</span>
               </S.FooterText>
               <S.FooterText>
-                Из них с сильным отставанием: <span>5</span>
+                Из них с сильным отставанием: <span>{slowPackets.length}</span>
               </S.FooterText>
               <S.FooterText>
-                Показано: <span>15</span>
+                Показано: <span>{fileData.length}</span>
               </S.FooterText>
             </S.FooterTable>
           </S.MyComponent>

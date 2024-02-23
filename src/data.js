@@ -60,9 +60,27 @@ export const fileData = [
     value: 1,
   },
   {
-    id: 5,
-    name: 'КАМАЗ топливозаправочный',
-    IMEI: '898211',
+    id: 11,
+    name: 'р149кк',
+    IMEI: '351555060039144',
+    value: 3,
+  },
+  {
+    id: 12,
+    name: 'р150кк',
+    IMEI: '000555060043856',
     value: 0,
+  },
+  {
+    id: 13,
+    name: 'р151кк_can',
+    IMEI: '000555060039193',
+    value: 0,
+  },
+  {
+    id: 14,
+    name: 'р151кк_old_fw',
+    IMEI: '351555060042585',
+    value: undefined,
   },
 ]
