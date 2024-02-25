@@ -16,11 +16,9 @@ export interface DataType {
 export const App = () => {
   const [searchText, setSearchText] = useState('')
   const [sort, setSort] = useState('')
-  const [list, setList] = useState<DataType[] | null>(null)
+  const [list, setList] = useState<DataType[] | undefined>(fileData)
 
-  useEffect(() => {
-    setList(fileData)
-  }, [])
+  //   let result: DataType[] | undefined = fileData
 
   // фильтрация
   useEffect(() => {
@@ -37,17 +35,18 @@ export const App = () => {
   useEffect(() => {
     if (sort && list) {
       if (sort === `up ${title1Col}`) {
-        setList(list.sort((a, b) => (a.name < b.name ? 1 : -1)))
+        setList(list.sort())
+        //   result = list.sort()
       } else if (sort === `down ${title1Col}`) {
-        setList(list?.sort((a, b) => (a.name > b.name ? 1 : -1)))
+        setList(list.sort().reverse())
       } else if (sort === `up ${title2Col}`) {
-        setList(list?.sort((a, b) => (a.IMEI < b.IMEI ? 1 : -1)))
+        setList(list.sort((a, b) => (a.IMEI > b.IMEI ? 1 : -1)))
       } else if (sort === `down ${title2Col}`) {
-        setList(list?.sort((a, b) => (a.IMEI > b.IMEI ? 1 : -1)))
-      } else if (sort === `down ${title3Col}`) {
-        setList(list?.sort((a, b) => (a.packs < b.packs ? 1 : -1)))
+        setList(list.sort((a, b) => (a.IMEI < b.IMEI ? 1 : -1)))
       } else if (sort === `down ${title3Col}`) {
         setList(list?.sort((a, b) => (a.packs > b.packs ? 1 : -1)))
+      } else if (sort === `down ${title3Col}`) {
+        setList(list.sort((a, b) => (a.packs < b.packs ? 1 : -1)))
       }
     } else {
       setList(fileData)
@@ -143,6 +142,7 @@ const ResultsTitleCol = ({ title, sort, setSort }: BoxProps) => {
     }
   }
 
+  // скрывает стрелочку сортировки
   let visibleArrow = false
   if (sort === `up ${title}` || sort === `down ${title}`) {
     visibleArrow = true
