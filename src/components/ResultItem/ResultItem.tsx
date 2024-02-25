@@ -6,17 +6,17 @@ export const ResultItem = ({ dataItem }: { dataItem: DataType }) => {
   const [checked, setChecked] = useState(false)
 
   let colorTextValue: string
-  if (dataItem.value === undefined) {
+  if (dataItem.packs === '-') {
     colorTextValue = 'white'
-  } else if (dataItem.value) {
+  } else if (dataItem.packs) {
     colorTextValue = 'red'
   } else {
     colorTextValue = 'green'
   }
+
   return (
     <S.ResultsItem
-      onClick={(e: MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation()
+      onClick={() => {
         setChecked(!checked)
       }}
     >
@@ -29,6 +29,7 @@ export const ResultItem = ({ dataItem }: { dataItem: DataType }) => {
             e.stopPropagation()
             setChecked(!checked)
           }}
+          onClick={(e: MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
         ></S.InputСheckbox>
         <S.InputLabel htmlFor={dataItem.id}></S.InputLabel>
       </S.ResultsItemCol1>
@@ -39,7 +40,7 @@ export const ResultItem = ({ dataItem }: { dataItem: DataType }) => {
           color: `${colorTextValue}`,
         }}
       >
-        {dataItem.value === undefined ? '-' : dataItem.value}
+        {dataItem.packs}
       </S.ResultsItemCol4>
     </S.ResultsItem>
   )

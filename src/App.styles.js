@@ -95,7 +95,8 @@ export const SearchBG = styled.div`
   border-radius: 10px;
   position: relative;
 `
-export const FilterSvg = styled.svg`
+
+export const SearchSvg = styled.svg`
   height: 24px;
   width: 24px;
   fill: #adb5bd;
@@ -103,6 +104,7 @@ export const FilterSvg = styled.svg`
   top: 50%;
   transform: translate(50%, -50%);
 `
+
 export const SearchText = styled.input`
   font-family: 'Montserrat', sans-serif;
   border-radius: 10px;
@@ -143,20 +145,25 @@ export const HeaderTable = styled.div`
   margin-bottom: 20px;
   gap: 8px;
 `
-export const BodyTable = styled.ul`
-  //   flex: 1 1 auto;
-`
+export const BodyTable = styled.ul``
 
 export const ResultsTitleColumns = styled.div`
   overflow: hidden;
-  //   display: flex;
-  //   justify-content: center;
-  //   border-bottom: 2px solid #fff;
+  cursor: pointer;
 `
 export const ResultsTitleCol1 = styled(ResultsTitleColumns)``
-export const ResultsTitleCol2 = styled(ResultsTitleColumns)``
+export const ResultsTitleCol2 = styled(ResultsTitleColumns)`
+  display: flex;
+  gap: 5px;
+`
 export const ResultsTitleCol3 = styled(ResultsTitleColumns)``
 export const ResultsTitleCol4 = styled(ResultsTitleColumns)``
+
+export const ColTitle = styled.p``
+export const ColSort = styled.p`
+  font-size: 22px;
+  line-height: 0.7;
+`
 
 export const FooterTable = styled.div`
   padding: 10px;
