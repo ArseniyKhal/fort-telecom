@@ -93,13 +93,22 @@ export const SearchBG = styled.div`
   background-color: #45454e;
   padding: 15px;
   border-radius: 10px;
+  position: relative;
+`
+export const FilterSvg = styled.svg`
+  height: 24px;
+  width: 24px;
+  fill: #adb5bd;
+  position: absolute;
+  top: 50%;
+  transform: translate(50%, -50%);
 `
 export const SearchText = styled.input`
   font-family: 'Montserrat', sans-serif;
   border-radius: 10px;
   border: none;
   background: #2d2d33;
-  padding: 10px 15px;
+  padding: 10px 15px 10px 42px;
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   font-style: normal;

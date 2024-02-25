@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { ChangeEvent, MouseEvent, useState } from 'react'
 import { DataType } from '../../App'
 import * as S from './ResultItem.styles'
 
 export const ResultItem = ({ dataItem }: { dataItem: DataType }) => {
+  const [checked, setChecked] = useState(false)
+
   let colorTextValue: string
   if (dataItem.value === undefined) {
     colorTextValue = 'white'
@@ -13,14 +15,21 @@ export const ResultItem = ({ dataItem }: { dataItem: DataType }) => {
   }
   return (
     <S.ResultsItem
-    // onClick={() => handleClickUser()}
-    // style={{
-    //   height: `${isVisibleUser ? '200px' : ''}`,
-    //   gridTemplateColumns: `${isVisibleUser ? '200px 1fr ' : ''}`,
-    // }}
+      onClick={(e: MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation()
+        setChecked(!checked)
+      }}
     >
       <S.ResultsItemCol1>
-        <S.InputСheckbox type="checkbox" id={dataItem.id}></S.InputСheckbox>
+        <S.InputСheckbox
+          type="checkbox"
+          id={dataItem.id}
+          checked={checked}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            e.stopPropagation()
+            setChecked(!checked)
+          }}
+        ></S.InputСheckbox>
         <S.InputLabel htmlFor={dataItem.id}></S.InputLabel>
       </S.ResultsItemCol1>
       <S.ResultsItemCol2>{dataItem.name}</S.ResultsItemCol2>
