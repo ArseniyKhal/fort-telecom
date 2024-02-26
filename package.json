@@ -14,6 +14,11 @@
     "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4"
   },
+  "overrides": {
+	"@typescript-eslint/typescript-estree": "^5.57.1",
+	"fork-ts-checker-webpack-plugin": "^6.5.3",
+	"typescript": "^5.0.3"
+ },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"
@@ -40,7 +45,7 @@
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.0.3"
   },
   "types": "./index.d.ts",
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
