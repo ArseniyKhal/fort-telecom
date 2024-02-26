@@ -51,6 +51,16 @@ export const App = () => {
     )
   })
 
+  // выделенные строки id
+  useEffect(() => {
+    if (sessionStorage.getItem('checkedArr') !== null) {
+      const checkedArr = JSON.parse(
+        sessionStorage.getItem('checkedArr') || '[]',
+      )
+      setCheckedCount(checkedArr)
+    }
+  }, [])
+
   return (
     <>
       <S.GlobalStyle />

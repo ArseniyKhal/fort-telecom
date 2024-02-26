@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from 'react'
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
 import { DataType } from '../../App'
 import * as S from './ResultItem.styles'
 
@@ -15,13 +15,42 @@ export const ResultItem = ({
 }: ResultItemProps) => {
   const [checked, setChecked] = useState(false)
 
+  useEffect(() => {
+    if (sessionStorage.getItem('checkedArr') !== null) {
+      const checkedArr = JSON.parse(
+        sessionStorage.getItem('checkedArr') || '[]',
+      )
+      if (checkedArr.includes(dataItem.id)) {
+        setChecked(true)
+      }
+    }
+  }, [])
+
   // выделение строки
   const handleCheck = () => {
     setChecked(!checked)
-    if (!checkedCount.includes(dataItem.id)) {
-      setCheckedCount([...checkedCount, dataItem.id])
+    if (sessionStorage.getItem('checkedArr') === null) {
+      sessionStorage.setItem('checkedArr', JSON.stringify([dataItem.id]))
     } else {
-      setCheckedCount(checkedCount.filter((el) => el !== dataItem.id))
+      const checkedArr = JSON.parse(
+        sessionStorage.getItem('checkedArr') || '[]',
+      )
+
+      if (checkedArr.includes(dataItem.id)) {
+        const setLS = JSON.stringify(
+          checkedArr.filter((el: number) => el !== dataItem.id),
+        )
+        sessionStorage.setItem('checkedArr', setLS)
+      } else {
+        const setLS = JSON.stringify([...checkedArr, dataItem.id])
+        sessionStorage.setItem('checkedArr', setLS)
+      }
+
+      if (!checkedCount.includes(dataItem.id)) {
+        setCheckedCount([...checkedCount, dataItem.id])
+      } else {
+        setCheckedCount(checkedCount.filter((el) => el !== dataItem.id))
+      }
     }
   }
 
