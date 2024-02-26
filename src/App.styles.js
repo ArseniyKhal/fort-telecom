@@ -156,15 +156,6 @@ export const ResultsTitleCol2 = styled(ResultsTitleColumns)`
   display: flex;
   gap: 5px;
 `
-export const ResultsTitleCol3 = styled(ResultsTitleColumns)``
-export const ResultsTitleCol4 = styled(ResultsTitleColumns)``
-
-export const ColTitle = styled.p``
-export const ColSort = styled.p`
-  font-size: 22px;
-  line-height: 0.7;
-`
-
 export const FooterTable = styled.div`
   padding: 10px;
   display: flex;

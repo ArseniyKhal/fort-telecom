@@ -9,7 +9,7 @@ export const fileData = [
     id: 1,
     name: '234',
     IMEI: '545664',
-    packs: '-',
+    packs: undefined,
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ export const fileData = [
     id: 5,
     name: 'КАМАЗ топливозаправочный',
     IMEI: '898211',
-    packs: '-',
+    packs: undefined,
   },
   {
     id: 6,
@@ -45,7 +45,7 @@ export const fileData = [
     id: 7,
     name: 'Прицеп фм9020 {Д}',
     IMEI: '000454070144413',
-    packs: '-',
+    packs: undefined,
   },
   {
     id: 8,
@@ -57,7 +57,7 @@ export const fileData = [
     id: 9,
     name: 'р147кк',
     IMEI: '3515550600043872',
-    packs: '-',
+    packs: undefined,
   },
   {
     id: 10,
@@ -87,6 +87,6 @@ export const fileData = [
     id: 14,
     name: 'р151кк_old_fw',
     IMEI: '351555060042585',
-    packs: '-',
+    packs: undefined,
   },
 ]

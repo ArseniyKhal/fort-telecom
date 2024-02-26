@@ -8,6 +8,7 @@ interface ResultItemProps {
   setCheckedCount: React.Dispatch<React.SetStateAction<number[]>>
 }
 
+// компонент строки таблицы
 export const ResultItem = ({
   dataItem,
   checkedCount,
@@ -15,6 +16,7 @@ export const ResultItem = ({
 }: ResultItemProps) => {
   const [checked, setChecked] = useState(false)
 
+  // загрузка из sessionStorage отметки checked
   useEffect(() => {
     if (sessionStorage.getItem('checkedArr') !== null) {
       const checkedArr = JSON.parse(
@@ -26,7 +28,7 @@ export const ResultItem = ({
     }
   }, [])
 
-  // выделение строки
+  // выделение строки и сохранение в sessionStorage
   const handleCheck = () => {
     setChecked(!checked)
     if (sessionStorage.getItem('checkedArr') === null) {
@@ -54,8 +56,9 @@ export const ResultItem = ({
     }
   }
 
+  // покраска текста
   let colorTextValue: string
-  if (dataItem.packs === '-') {
+  if (dataItem.packs === undefined) {
     colorTextValue = 'white'
   } else if (dataItem.packs) {
     colorTextValue = 'red'
@@ -83,7 +86,7 @@ export const ResultItem = ({
           color: `${colorTextValue}`,
         }}
       >
-        {dataItem.packs}
+        {dataItem.packs === undefined ? '-' : dataItem.packs}
       </S.ResultsItemCol4>
     </S.ResultsItem>
   )

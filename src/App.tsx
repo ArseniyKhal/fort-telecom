@@ -3,6 +3,7 @@ import { ResultItem } from './components/ResultItem/ResultItem'
 import { fileData } from './data'
 import { useDispatch, useSelector } from 'react-redux'
 import { setList } from './store/slices/listSlice'
+import { ResultsTitleCol } from './components/TitleColumn/TitleColumn'
 import * as S from './App.styles'
 
 const title1Col = 'Объект'
@@ -12,7 +13,7 @@ export interface DataType {
   id: number
   name: string
   IMEI: string
-  packs: number | string
+  packs: number | string | undefined
 }
 
 export const App = () => {
@@ -51,7 +52,7 @@ export const App = () => {
     )
   })
 
-  // выделенные строки id
+  // выделенные строки id в footer-е
   useEffect(() => {
     if (sessionStorage.getItem('checkedArr') !== null) {
       const checkedArr = JSON.parse(
@@ -124,69 +125,5 @@ export const App = () => {
         </S.Container>
       </S.Wrapper>
     </>
-  )
-}
-
-// клик по фильтру
-interface BoxProps {
-  title: string
-  sort: string
-  setSort: React.Dispatch<React.SetStateAction<string>>
-  sortBy: string
-}
-
-const ResultsTitleCol = ({ title, sort, setSort, sortBy }: BoxProps) => {
-  const dispatch = useDispatch()
-  const { dataList } = useSelector((state: any) => state.dataList)
-
-  const handleClick = () => {
-    const arrayForSort = [...dataList]
-    if ((sort !== `up ${title}` && sort !== `down ${title}`) || sort === ``) {
-      setSort(`up ${title}`)
-      dispatch(
-        setList(
-          arrayForSort.sort(function (a, b) {
-            return a[sortBy] > b[sortBy] ? 1 : -1
-          }),
-        ),
-      )
-    } else if (sort === `up ${title}`) {
-      setSort(`down ${title}`)
-      dispatch(
-        setList(
-          arrayForSort.sort(function (a, b) {
-            return a[sortBy] < b[sortBy] ? 1 : -1
-          }),
-        ),
-      )
-    } else {
-      setSort('')
-      dispatch(setList(fileData))
-    }
-  }
-
-  // скрывает стрелочку сортировки
-  let visibleArrow = false
-  if (sort === `up ${title}` || sort === `down ${title}`) {
-    visibleArrow = true
-  }
-  return (
-    <S.ResultsTitleCol2
-      onClick={() => {
-        handleClick()
-      }}
-    >
-      <S.ColTitle>{title}</S.ColTitle>
-      {visibleArrow && (
-        <S.ColSort
-          style={{
-            transform:
-              sort === `up ${title}` ? 'rotate(0deg)' : 'rotate(180deg)',
-          }}
-        >
-          ↑
-        </S.ColSort>
-      )}
-    </S.ResultsTitleCol2>
   )
 }
