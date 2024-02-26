@@ -15,6 +15,7 @@ export interface DataType {
 
 export const App = () => {
   const [searchText, setSearchText] = useState('')
+  const [checkedCount, setCheckedCount] = useState<number[]>([])
   const [sort, setSort] = useState('')
   const [list, setList] = useState<DataType[] | undefined>(fileData)
 
@@ -35,10 +36,10 @@ export const App = () => {
   useEffect(() => {
     if (sort && list) {
       if (sort === `up ${title1Col}`) {
-        setList(list.sort())
+        setList(list.sort((a, b) => (a.name > b.name ? 1 : -1)))
         //   result = list.sort()
       } else if (sort === `down ${title1Col}`) {
-        setList(list.sort().reverse())
+        setList(list.sort((a, b) => (a.name < b.name ? 1 : -1)))
       } else if (sort === `up ${title2Col}`) {
         setList(list.sort((a, b) => (a.IMEI > b.IMEI ? 1 : -1)))
       } else if (sort === `down ${title2Col}`) {
@@ -59,7 +60,14 @@ export const App = () => {
   )
 
   const ListMap = list?.map((el: DataType) => {
-    return <ResultItem key={el.id} dataItem={el}></ResultItem>
+    return (
+      <ResultItem
+        key={el.id}
+        dataItem={el}
+        checkedCount={checkedCount}
+        setCheckedCount={setCheckedCount}
+      ></ResultItem>
+    )
   })
 
   return (
@@ -112,6 +120,11 @@ export const App = () => {
               <S.FooterText>
                 Показано: <span>{list?.length}</span>
               </S.FooterText>
+              {checkedCount.length > 0 && (
+                <S.FooterText>
+                  Выделено: <span>{checkedCount.length}</span>
+                </S.FooterText>
+              )}
             </S.FooterTable>
           </S.MyComponent>
         </S.Container>
