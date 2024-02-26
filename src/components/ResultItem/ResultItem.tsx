@@ -15,6 +15,7 @@ export const ResultItem = ({
 }: ResultItemProps) => {
   const [checked, setChecked] = useState(false)
 
+  // выделение строки
   const handleCheck = () => {
     setChecked(!checked)
     if (!checkedCount.includes(dataItem.id)) {

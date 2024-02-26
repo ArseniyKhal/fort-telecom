@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { ResultItem } from './components/ResultItem/ResultItem'
 import { fileData } from './data'
+import { useDispatch, useSelector } from 'react-redux'
+import { setList } from './store/slices/listSlice'
 import * as S from './App.styles'
 
 const title1Col = 'Объект'
@@ -14,52 +16,31 @@ export interface DataType {
 }
 
 export const App = () => {
+  const dispatch = useDispatch()
   const [searchText, setSearchText] = useState('')
   const [checkedCount, setCheckedCount] = useState<number[]>([])
   const [sort, setSort] = useState('')
-  const [list, setList] = useState<DataType[] | undefined>(fileData)
-
-  //   let result: DataType[] | undefined = fileData
+  const { dataList } = useSelector((state: any) => state.dataList)
 
   // фильтрация
   useEffect(() => {
-    setList(
-      fileData.filter(
-        (el: DataType) =>
-          el.name.toLowerCase().includes(searchText.toLowerCase()) ||
-          el.IMEI.toLowerCase().includes(searchText.toLowerCase()),
+    dispatch(
+      setList(
+        fileData.filter(
+          (el: DataType) =>
+            el.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            el.IMEI.toLowerCase().includes(searchText.toLowerCase()),
+        ),
       ),
     )
   }, [searchText])
 
-  // сортировка
-  useEffect(() => {
-    if (sort && list) {
-      if (sort === `up ${title1Col}`) {
-        setList(list.sort((a, b) => (a.name > b.name ? 1 : -1)))
-        //   result = list.sort()
-      } else if (sort === `down ${title1Col}`) {
-        setList(list.sort((a, b) => (a.name < b.name ? 1 : -1)))
-      } else if (sort === `up ${title2Col}`) {
-        setList(list.sort((a, b) => (a.IMEI > b.IMEI ? 1 : -1)))
-      } else if (sort === `down ${title2Col}`) {
-        setList(list.sort((a, b) => (a.IMEI < b.IMEI ? 1 : -1)))
-      } else if (sort === `down ${title3Col}`) {
-        setList(list?.sort((a, b) => (a.packs > b.packs ? 1 : -1)))
-      } else if (sort === `down ${title3Col}`) {
-        setList(list.sort((a, b) => (a.packs < b.packs ? 1 : -1)))
-      }
-    } else {
-      setList(fileData)
-    }
-  }, [sort])
-
   // подсчет пакетов с отставанием
-  const slowPackets = list?.filter(
-    (el: DataType) => el.packs !== 0 && el.packs !== undefined,
+  const slowPackets = dataList?.filter(
+    (el: DataType) => el.packs !== 0 && el.packs !== '-',
   )
 
-  const ListMap = list?.map((el: DataType) => {
+  const ListMap = dataList.map((el: DataType) => {
     return (
       <ResultItem
         key={el.id}
@@ -97,28 +78,31 @@ export const App = () => {
                 title={title1Col}
                 sort={sort}
                 setSort={setSort}
+                sortBy="name"
               />
               <ResultsTitleCol
                 title={title2Col}
                 sort={sort}
                 setSort={setSort}
+                sortBy="IMEI"
               />
               <ResultsTitleCol
                 title={title3Col}
                 sort={sort}
                 setSort={setSort}
+                sortBy="packs"
               />
             </S.HeaderTable>
             <S.BodyTable>{ListMap}</S.BodyTable>
             <S.FooterTable>
               <S.FooterText>
-                Объектов: <span>{list?.length}</span>
+                Объектов: <span>{dataList.length}</span>
               </S.FooterText>
               <S.FooterText>
                 Из них с сильным отставанием: <span>{slowPackets?.length}</span>
               </S.FooterText>
               <S.FooterText>
-                Показано: <span>{list?.length}</span>
+                Показано: <span>{dataList.length}</span>
               </S.FooterText>
               {checkedCount.length > 0 && (
                 <S.FooterText>
@@ -138,20 +122,36 @@ interface BoxProps {
   title: string
   sort: string
   setSort: React.Dispatch<React.SetStateAction<string>>
+  sortBy: string
 }
 
-const ResultsTitleCol = ({ title, sort, setSort }: BoxProps) => {
+const ResultsTitleCol = ({ title, sort, setSort, sortBy }: BoxProps) => {
+  const dispatch = useDispatch()
+  const { dataList } = useSelector((state: any) => state.dataList)
+
   const handleClick = () => {
-    if (sort !== `up ${title}` && sort !== `down ${title}`) {
+    const arrayForSort = [...dataList]
+    if ((sort !== `up ${title}` && sort !== `down ${title}`) || sort === ``) {
       setSort(`up ${title}`)
+      dispatch(
+        setList(
+          arrayForSort.sort(function (a, b) {
+            return a[sortBy] > b[sortBy] ? 1 : -1
+          }),
+        ),
+      )
+    } else if (sort === `up ${title}`) {
+      setSort(`down ${title}`)
+      dispatch(
+        setList(
+          arrayForSort.sort(function (a, b) {
+            return a[sortBy] < b[sortBy] ? 1 : -1
+          }),
+        ),
+      )
     } else {
-      if (!sort) {
-        setSort(`up ${title}`)
-      } else if (sort === `up ${title}`) {
-        setSort(`down ${title}`)
-      } else {
-        setSort('')
-      }
+      setSort('')
+      dispatch(setList(fileData))
     }
   }
 

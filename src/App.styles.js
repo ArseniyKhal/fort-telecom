@@ -125,24 +125,24 @@ export const SearchText = styled.input`
   &::-webkit-input-placeholder {
     background-color: transparent;
     line-height: 150%;
-    color: var(--text-color-input);
+    color: #bcbcc4;
   }
   &:-ms-input-placeholder {
     background-color: transparent;
     line-height: 150%;
-    color: var(--text-color-input);
+    color: #bcbcc4;
   }
   &::placeholder {
     background-color: transparent;
     line-height: 150%;
-    color: var(--text-color-white);
+    color: #bcbcc4;
   }
 `
 export const HeaderTable = styled.div`
   display: grid;
   grid-template-columns: 40px 1fr 1fr 1fr;
   align-items: center;
-  margin-bottom: 20px;
+  padding-bottom: 15px;
   gap: 8px;
 `
 export const BodyTable = styled.ul``
