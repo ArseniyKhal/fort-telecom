@@ -7,7 +7,7 @@ export const ColSort = styled.p`
 `
 export const ResultsTitleColumn = styled.div`
   overflow: hidden;
-  cursor: pointer;
   display: flex;
   gap: 5px;
+  padding: 0 5px;
 `

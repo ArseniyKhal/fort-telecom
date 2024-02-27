@@ -1,11 +1,14 @@
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
-import { DataType } from '../../App'
+import { DataType } from '../MyComponent/MyComponent'
+import { SettingsColType, SettingsType } from '../../App'
+import { colimnConstructor } from '../MyComponent/MyComponent'
 import * as S from './ResultItem.styles'
 
 interface ResultItemProps {
   dataItem: DataType
   checkedCount: number[]
   setCheckedCount: React.Dispatch<React.SetStateAction<number[]>>
+  settings: SettingsType
 }
 
 // компонент строки таблицы
@@ -13,6 +16,7 @@ export const ResultItem = ({
   dataItem,
   checkedCount,
   setCheckedCount,
+  settings,
 }: ResultItemProps) => {
   const [checked, setChecked] = useState(false)
 
@@ -56,6 +60,12 @@ export const ResultItem = ({
     }
   }
 
+  // колонки таблицы
+  //   const ItemColtMap = settings.columns.map((col: SettingsColType) => {
+  //     const type = `{dataItem.${col.type}}`
+  //     return <S.ResultsColumn key={`${col.name}_column`}>{type}</S.ResultsColumn>
+  //   })
+
   // покраска текста
   let colorTextValue: string
   if (dataItem.packs === undefined) {
@@ -67,27 +77,33 @@ export const ResultItem = ({
   }
 
   return (
-    <S.ResultsItem onClick={() => handleCheck()}>
-      <S.ResultsItemCol1>
-        <S.InputСheckbox
-          type="checkbox"
-          checked={checked}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            e.stopPropagation()
-          }}
-          onClick={(e: MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
-        ></S.InputСheckbox>
-        <S.InputLabel />
-      </S.ResultsItemCol1>
-      <S.ResultsItemCol2>{dataItem.name}</S.ResultsItemCol2>
-      <S.ResultsItemCol3>{dataItem.IMEI}</S.ResultsItemCol3>
-      <S.ResultsItemCol4
+    <S.ResultsItem
+      onClick={() => handleCheck()}
+      style={{ gridTemplateColumns: colimnConstructor(settings) }}
+    >
+      {settings.inputs && (
+        <S.ResultsItemCol1>
+          <S.InputСheckbox
+            type="checkbox"
+            checked={checked}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              e.stopPropagation()
+            }}
+            onClick={(e: MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
+          ></S.InputСheckbox>
+          <S.InputLabel />
+        </S.ResultsItemCol1>
+      )}
+      {/* {ItemColtMap} */}
+      <S.ResultsColumn>{dataItem.name}</S.ResultsColumn>
+      <S.ResultsColumn>{dataItem.IMEI}</S.ResultsColumn>
+      <S.ResultsColumn
         style={{
           color: `${colorTextValue}`,
         }}
       >
         {dataItem.packs === undefined ? '-' : dataItem.packs}
-      </S.ResultsItemCol4>
+      </S.ResultsColumn>
     </S.ResultsItem>
   )
 }

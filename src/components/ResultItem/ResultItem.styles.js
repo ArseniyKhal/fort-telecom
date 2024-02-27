@@ -15,20 +15,17 @@ export const ResultsItem = styled.li`
     background-color: #45454e;
   }
 `
-export const ResultsColumns = styled.div`
+export const ResultsColumn = styled.div`
   align-items: center;
   overflow: hidden;
   gap: 8px;
   font-weight: 600;
+  padding: 0 5px;
 `
-export const ResultsItemCol1 = styled(ResultsColumns)`
+export const ResultsItemCol1 = styled(ResultsColumn)`
   display: flex;
   justify-content: center;
 `
-export const ResultsItemCol2 = styled(ResultsColumns)``
-export const ResultsItemCol3 = styled(ResultsColumns)``
-export const ResultsItemCol4 = styled(ResultsColumns)``
-
 export const InputLabel = styled.label``
 export const InputСheckbox = styled.input`
   position: absolute;

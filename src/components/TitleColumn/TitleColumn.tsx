@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { setList } from '../../store/slices/listSlice'
-import { fileData } from '../../data'
+import { DataType } from '../MyComponent/MyComponent'
 import * as S from './TitleColumn.styles'
 
 interface BoxProps {
@@ -8,10 +8,19 @@ interface BoxProps {
   sort: string
   setSort: React.Dispatch<React.SetStateAction<string>>
   sortBy: string
+  sorting: boolean
+  fileData: DataType[]
 }
 
 // компонент заголовка колонки
-export const ResultsTitleCol = ({ title, sort, setSort, sortBy }: BoxProps) => {
+export const ResultsTitleCol = ({
+  title,
+  sort,
+  setSort,
+  sortBy,
+  sorting,
+  fileData,
+}: BoxProps) => {
   const dispatch = useDispatch()
   const { dataList } = useSelector((state: any) => state.dataList)
 
@@ -58,8 +67,11 @@ export const ResultsTitleCol = ({ title, sort, setSort, sortBy }: BoxProps) => {
   return (
     <S.ResultsTitleColumn
       onClick={() => {
-        handleClick()
+        {
+          sorting && handleClick()
+        }
       }}
+      style={{ cursor: `${sorting ? 'pointer' : ''}` }}
     >
       <S.ColTitle>{title}</S.ColTitle>
       {visibleArrow && (

@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fileData } from '../../data'
 
 const initialState = {
-  dataList: fileData,
+  dataList: [],
 }
 
 const listSlice = createSlice({
@@ -15,6 +14,6 @@ const listSlice = createSlice({
   },
 })
 
-export const { setList } = listSlice.actions
+export const { setList, setCheckedList } = listSlice.actions
 
 export default listSlice.reducer
