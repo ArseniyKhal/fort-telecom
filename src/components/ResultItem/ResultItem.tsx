@@ -105,11 +105,6 @@ export const ResultItem = ({
         </S.ResultsItemCol1>
       )}
       {ItemColtMap}
-      {/* <S.ResultsColumn>{dataItem.name}</S.ResultsColumn>
-      <S.ResultsColumn>{dataItem.IMEI}</S.ResultsColumn>
-      <S.ResultsColumn>
-        {dataItem.packs === undefined ? '-' : dataItem.packs}
-      </S.ResultsColumn> */}
     </S.ResultsItem>
   )
 }

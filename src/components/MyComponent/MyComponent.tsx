@@ -6,16 +6,11 @@ import { ResultsTitleCol } from '../TitleColumn/TitleColumn'
 import { SettingsType, SettingsColType } from '../../App'
 import * as S from './MyComponent.styles'
 
-const title1Col = 'Объект'
-const title2Col = 'IMEI для регистрации'
-const title3Col = 'Пакетов не передано'
-
 export const colimnConstructor = (set: SettingsType) => {
   let colStr = ''
   for (let i = 0; i < set.columns.length; ++i) colStr += '1fr '
   return `${set.inputs ? '40px ' : ''}${colStr}`
 }
-
 export interface DataType {
   id: number
   name: string
