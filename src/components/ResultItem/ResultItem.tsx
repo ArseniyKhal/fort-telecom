@@ -1,7 +1,6 @@
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
-import { DataType } from '../MyComponent/MyComponent'
+import { DataType, colimnConstructor } from '../MyComponent/MyComponent'
 import { SettingsColType, SettingsType } from '../../App'
-import { colimnConstructor } from '../MyComponent/MyComponent'
 import * as S from './ResultItem.styles'
 
 interface ResultItemProps {
@@ -61,20 +60,31 @@ export const ResultItem = ({
   }
 
   // колонки таблицы
-  //   const ItemColtMap = settings.columns.map((col: SettingsColType) => {
-  //     const type = `{dataItem.${col.type}}`
-  //     return <S.ResultsColumn key={`${col.name}_column`}>{type}</S.ResultsColumn>
-  //   })
+  const ItemColtMap = settings.columns.map((col: SettingsColType) => {
+    const cell = dataItem[col.type as keyof DataType]
+    // покраска третей колонки
+    let colorTextValue: string = 'white'
+    if (col.type === 'packs') {
+      if (cell === undefined) {
+        colorTextValue = 'white'
+      } else if (cell) {
+        colorTextValue = 'red'
+      } else {
+        colorTextValue = 'green'
+      }
+    }
 
-  // покраска текста
-  let colorTextValue: string
-  if (dataItem.packs === undefined) {
-    colorTextValue = 'white'
-  } else if (dataItem.packs) {
-    colorTextValue = 'red'
-  } else {
-    colorTextValue = 'green'
-  }
+    return (
+      <S.ResultsColumn
+        key={`${col.name}_column`}
+        style={{
+          color: `${colorTextValue}`,
+        }}
+      >
+        {cell === undefined ? '-' : cell}
+      </S.ResultsColumn>
+    )
+  })
 
   return (
     <S.ResultsItem
@@ -94,16 +104,12 @@ export const ResultItem = ({
           <S.InputLabel />
         </S.ResultsItemCol1>
       )}
-      {/* {ItemColtMap} */}
-      <S.ResultsColumn>{dataItem.name}</S.ResultsColumn>
+      {ItemColtMap}
+      {/* <S.ResultsColumn>{dataItem.name}</S.ResultsColumn>
       <S.ResultsColumn>{dataItem.IMEI}</S.ResultsColumn>
-      <S.ResultsColumn
-        style={{
-          color: `${colorTextValue}`,
-        }}
-      >
+      <S.ResultsColumn>
         {dataItem.packs === undefined ? '-' : dataItem.packs}
-      </S.ResultsColumn>
+      </S.ResultsColumn> */}
     </S.ResultsItem>
   )
 }
